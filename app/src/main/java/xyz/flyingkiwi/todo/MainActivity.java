@@ -1,15 +1,26 @@
 package xyz.flyingkiwi.todo;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import androidx.lifecycle.ViewModelProviders;
+
+import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.ViewModelProvider;
+
+//import androidx.core.app.NotificationCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String CHANNEL_ID = "wtfIsChannelId";
+    private EventViewModel eventViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +29,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = findViewById(R.id.fab);
+        eventViewModel = ViewModelProviders.of(this).get(EventViewModel.class);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                eventViewModel.eventSchedule();
+
+
             }
         });
     }
